@@ -42,8 +42,8 @@ LABELS = sorted(CLASS_MAP.values())  # ["organic", "recyclable"] -> ordre alphab
 # ------------------------------------------------------------------
 # ECHANTILLONNAGE (dataset complet trop volumineux pour ce projet)
 # ------------------------------------------------------------------
-SAMPLE_PER_CLASS_TRAIN = 1000
-SAMPLE_PER_CLASS_TEST = 200
+SAMPLE_PER_CLASS_TRAIN = 100
+SAMPLE_PER_CLASS_TEST = 50
 SAMPLE_SEED = 42
 
 # ------------------------------------------------------------------

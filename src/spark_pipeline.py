@@ -204,12 +204,15 @@ def stage_2_augmentation(spark):
     augment_udf = F.udf(augment_image, AUGMENTATION_SCHEMA)
     df_aug = df.withColumn("variants", augment_udf(F.col("image")))
     df_aug = df_aug.withColumn("variant", F.explode(F.col("variants")))
-    df_final = df_aug.select(
-        "label",
-        F.col("variant.aug_type").alias("aug_type"),
-        F.col("variant.image").alias("image"),
+    df_final = (
+        df_aug.select(
+             "label",
+             F.col("variant.aug_type").alias("aug_type"),
+             F.col("variant.image").alias("image"),
+        )
+        .repartition(2, "label")
+        .cache()
     )
-
     df_final.groupBy("label", "aug_type").count().orderBy("label", "aug_type").show(50, truncate=False)
 
     (
